@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- p命名空间注入 -->
+    <bean id="employeeP" class="com.atguigu.spring6.iocxml.ditest.Emp"
+          p:empName="Linzi" p:age="18" p:tasksList-ref="listOfTasks" p:deptMap-ref="mapOfDepartments">
+    </bean>
+
+    <!--    &lt;!&ndash; 1. 引入外部 Bean &ndash;&gt;-->
+    <!--    <bean id="dept" class="com.atguigu.spring6.iocxml.ditest.Dept">-->
+    <!--        <property name="deptName" value="Security"></property>-->
+    <!--    </bean>-->
+    <!--    <bean id="emp" class="com.atguigu.spring6.iocxml.ditest.Emp">-->
+    <!--        &lt;!&ndash; 普通属性 &ndash;&gt;-->
+    <!--        <property name="empName" value="Linzi"></property>-->
+    <!--        <property name="age" value="18"></property>-->
+    <!--        &lt;!&ndash; 对象属性 &ndash;&gt;-->
+    <!--        <property name="dept" ref="dept"></property>-->
+    <!--    </bean>-->
+
+    <!--    &lt;!&ndash; 2. 引入内部 Bean &ndash;&gt;-->
+    <!--    <bean id="emp2" class="com.atguigu.spring6.iocxml.ditest.Emp">-->
+    <!--        &lt;!&ndash; 普通属性 &ndash;&gt;-->
+    <!--        <property name="empName" value="Linzi2-"></property>-->
+    <!--        <property name="age" value="18"></property>-->
+    <!--        &lt;!&ndash; 对象属性 &ndash;&gt;-->
+    <!--        <property name="dept">-->
+    <!--            <bean id="dept2" class="com.atguigu.spring6.iocxml.ditest.Dept">-->
+    <!--                <property name="deptName" value="Security"></property>-->
+    <!--            </bean>-->
+    <!--        </property>-->
+    <!--    </bean>-->
+
+    <!-- 3. 级联属性赋值 -->
+    <bean id="dept3" class="com.atguigu.spring6.iocxml.ditest.Dept">
+        <property name="deptName" value="Security"></property>
+    </bean>
+
+    <bean id="dept4" class="com.atguigu.spring6.iocxml.ditest.Dept">
+        <property name="deptName" value="Finance"></property>
+    </bean>
+
+    <bean id="emp3" class="com.atguigu.spring6.iocxml.ditest.Emp">
+        <!-- 普通属性 -->
+        <property name="empName" value="Linzi-3"></property>
+        <property name="age" value="18"></property>
+        <!-- 注入 list 和 map 类型属性 -->
+        <property name="tasksList" ref="listOfTasks"></property>
+        <property name="deptMap" ref="mapOfDepartments"></property>
+    </bean>
+
+    <util:list id="listOfTasks">
+        <ref bean="taks1"></ref>
+        <ref bean="taks2"></ref>
+    </util:list>
+
+    <util:map id="mapOfDepartments">
+        <entry key="10010">
+            <ref bean="dept3"></ref>
+        </entry>
+        <entry key="10011">
+            <ref bean="dept4"></ref>
+        </entry>
+    </util:map>
+
+    <bean id="emp4" class="com.atguigu.spring6.iocxml.ditest.Emp">
+        <!-- 普通属性 -->
+        <property name="empName" value="Linzi-4"></property>
+        <property name="age" value="18"></property>
+    </bean>
+
+    <bean id="taks1" class="com.atguigu.spring6.iocxml.ditest.Tasks">
+        <property name="taskName" value="taskName1"></property>
+    </bean>
+
+    <bean id="taks2" class="com.atguigu.spring6.iocxml.ditest.Tasks">
+        <property name="taskName" value="taskName2"></property>
+    </bean>
+</beans>
